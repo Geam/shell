@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <string.h>
+#include "libft.h"
 
 size_t	ft_tablen(char **tab)
 {
@@ -19,8 +20,8 @@ size_t	ft_tablen(char **tab)
 	len = 0;
 	if (tab)
 	{
-		while (tab)
-			len++;
+		while (tab[len])
+			++len;
 	}
 	return (len);
 }

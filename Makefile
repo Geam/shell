@@ -15,7 +15,10 @@ LDFLAGS = -L libft -lft
 
 LIBFT	= $(PATH_LIBFT)/libft.a
 
-SRCS    = sh.c
+SRCS    = sh.c \
+		  env_manipulation.c \
+		  init_env.c
+
 OBJ     = $(patsubst %.c, $(PATH_OBJ)/%.o, $(SRCS))
 
 .PHONY: all clean fclean re libft dump_var

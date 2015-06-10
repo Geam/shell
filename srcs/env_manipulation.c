@@ -1,6 +1,6 @@
-#include "libft.h"
-
+#include <unistd.h>
 #include <stdlib.h>
+#include "libft.h"
 
 char    **ft_get_env_addr(char ***env, char *var)
 {
@@ -8,9 +8,9 @@ char    **ft_get_env_addr(char ***env, char *var)
     size_t  len;
 
     i = 0;
-    len = ft_strlen(var) + 1;
-    while ((*env)[i] && ft_strnequ((*env)[i], var, len) \
-            && (*env)[i][len] == '=')
+    len = ft_strlen(var);
+    while ((*env)[i] && (ft_strncmp((*env)[i], var, len) \
+            || (*env)[i][len] != '='))
         ++i;
     return (&((*env)[i]));
 }
@@ -20,7 +20,7 @@ void    ft_add_to_env(char ***env, char *var, char *value)
     size_t  i;
     char    **new_env;
 
-    new_env = (char **)malloc(sizeof(char *) * ft_tablen(*env) + 2);
+    new_env = (char **)malloc(sizeof(char *) * (ft_tablen(*env) + 2));
     if (new_env)
     {
         i = 0;
@@ -51,7 +51,7 @@ void    ft_rm_from_env(char ***env, char *var)
         len = ft_strlen(var);
         while ((*env)[i])
         {
-            if (ft_strncmp((*env)[i], var, len) && (*env)[i][len] != '=')
+            if (ft_strncmp((*env)[i], var, len) || (*env)[i][len] != '=')
             {
                 new_env[j] = (*env)[i];
                 ++j;
