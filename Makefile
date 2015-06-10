@@ -17,7 +17,8 @@ LIBFT	= $(PATH_LIBFT)/libft.a
 
 SRCS    = sh.c \
 		  env_manipulation.c \
-		  init_env.c
+		  init_env.c \
+		  path_manipulation.c
 
 OBJ     = $(patsubst %.c, $(PATH_OBJ)/%.o, $(SRCS))
 
