@@ -12,7 +12,7 @@ void    update_var(t_env *env)
     if ((temp = ft_getenv(env, "SHLVL")))
     {
         nval = ft_itoa(ft_atoi(temp) + 1);
-        ft_setenv(env, "SHLVL", nval);
+        ft_setenv(env, "SHLVL", nval, 1);
         free(nval);
     }
 }
@@ -32,6 +32,7 @@ void    generate_env(t_env *env)
 int     init_env(char **old_env, t_env *env)
 {
     env->env = NULL;
+    env->local = NULL;
     env->path = NULL;
     if (*old_env)
     {

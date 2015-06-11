@@ -15,7 +15,7 @@ char    **generate_dummy_path(void)
     return (path);
 }
 
-void    path_manip(t_env *env, char *var)
+void    path_manipulation(t_env *env, char *var)
 {
     char    **path;
     char    *env_path;

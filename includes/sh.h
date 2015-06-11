@@ -4,6 +4,7 @@
 typedef struct  s_env
 {
     char        **env;
+    char        **local;
     char        **path;
 }               t_env;
 
