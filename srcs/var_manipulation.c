@@ -3,6 +3,15 @@
 #include "libft.h"
 #include "sh.h"
 
+/**
+ * The function below are generic, they can be used for env and local variable
+ */
+
+/**
+ * Return a pointer to the var. If the var is not found, return NULL
+ *
+ * @return char**
+ */
 char    **ft_get_var_addr(char ***env, char *var)
 {
     size_t  i;
@@ -13,10 +22,17 @@ char    **ft_get_var_addr(char ***env, char *var)
     while ((*env)[i] && (ft_strncmp((*env)[i], var, len) \
             || (*env)[i][len] != '='))
         ++i;
-    return (&((*env)[i]));
+	if ((*env)[i])
+	    return (&((*env)[i]));
+	return (NULL);
 }
 
-void    ft_add_to_var(char ***env, char *var, char *value)
+/**
+ * Add new variable to array of variable
+ *
+ * @return void
+ */
+void    ft_add_to_var(char ***env, char *var, char *value, int new)
 {
     size_t  i;
     char    **new_env;
@@ -30,22 +46,30 @@ void    ft_add_to_var(char ***env, char *var, char *value)
             new_env[i] = (*env)[i];
             ++i;
         }
-        new_env[i] = ft_strjoin_3(var, "=", value);
+		if (new)
+	        new_env[i] = ft_strjoin_3(var, "=", value);
+		else
+			new_env[i] = value;
         new_env[i + 1] = NULL;
         free(*env);
         *env = new_env;
     }
 }
 
-void    ft_rm_from_var(char ***env, char *var)
+/**
+ * Remove variable from array of variable. If del == 0, the string won't be
+ * free, usefull when tranferring var from local to env and vice versa
+ *
+ * @return void
+ */
+void    ft_rm_from_var(char ***env, char *var, int del)
 {
     size_t  i;
     size_t  j;
     size_t  len;
     char    **new_env;
 
-    new_env = (char **)malloc(sizeof(char *) * ft_tablen(*env));
-    if (new_env)
+    if ((new_env = (char **)malloc(sizeof(char *) * ft_tablen(*env))))
     {
         i = 0;
         j = 0;
@@ -57,14 +81,23 @@ void    ft_rm_from_var(char ***env, char *var)
                 new_env[j] = (*env)[i];
                 ++j;
             }
-            else
+            else if (del)
                 free((*env)[i]);
             ++i;
         }
+		free(*env);
+		*env = new_env;
     }
 }
 
-void    ft_setvar(char ***env, char *var, char *value)
+/**
+ * Set a variable value in array of variable. If variable exist, replace it's
+ * value. If new, will alocate string such as <var>=<value>, else the value
+ * will be store as if
+ *
+ * @return void
+ */
+void    ft_setvar(char ***env, char *var, char *value, int new)
 {
     char    **env_var;
 
@@ -72,10 +105,13 @@ void    ft_setvar(char ***env, char *var, char *value)
     if (*env_var)
     {
         free(*env_var);
-        *env_var = ft_strjoin_3(var, "=", value);
+		if (new)
+	        *env_var = ft_strjoin_3(var, "=", value);
+		else
+			*env_var = value;
     }
     else
-        ft_add_to_var(env, var, value);
+        ft_add_to_var(env, var, value, new);
 }
 
 char    *ft_getvar(char ***env, char *var)

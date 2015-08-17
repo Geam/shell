@@ -9,7 +9,7 @@ char    **generate_dummy_path(void)
 
     if ((path = (char **)malloc(sizeof(char *) * 2)))
     {
-        path[0] = ft_strdup("/bin");
+        path[0] = ft_strdup("/usr/local/bin:/usr/bin:/bin");
         path[1] = NULL;
     }
     return (path);
