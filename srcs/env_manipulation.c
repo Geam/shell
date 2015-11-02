@@ -22,7 +22,7 @@ void    ft_setenv(t_env *env, char *var, char *val, char env_env)
 	}
 	else
 		ft_setvar(&env->env, var, val, 1);
-    path_manipulation(env, var);
+	path_manipulation(env, var);
 }
 
 /**
@@ -32,11 +32,11 @@ void    ft_setenv(t_env *env, char *var, char *val, char env_env)
  */
 char    *ft_getenv(t_env *env, char *var)
 {
-    char    *val;
+	char    *val;
 
-    if (!(val = ft_getvar(&env->env, var)))
-        val = ft_getvar(&env->local, var);
-    return (val);
+	if (!(val = ft_getvar(&env->env, var)))
+		val = ft_getvar(&env->local, var);
+	return (val);
 }
 
 /**
